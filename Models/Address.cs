@@ -2,7 +2,7 @@
 {
     public class Address
     {
-        public int Guid { get; set; }
+        public Guid Id { get; set; }
         public string StreetName { get; set; }
         public int StreetNumber { get; set; }
         public string City { get; set; }
