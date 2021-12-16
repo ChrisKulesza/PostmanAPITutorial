@@ -13,7 +13,7 @@ namespace PostmanAPI.Repositories
             _context = context;
         }
 
-        public async Task<Person> Create(Person person)
+        public async Task<Person> CreatePersonAsync(Person person)
         {
             _context.Persons.Add(person);
             await _context.SaveChangesAsync();
@@ -21,7 +21,7 @@ namespace PostmanAPI.Repositories
             return person;
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeletePersonAsync(Guid id)
         {
             var personToDelete = await _context.Persons.FindAsync(id);
 
@@ -37,12 +37,12 @@ namespace PostmanAPI.Repositories
             return await _context.Persons.ToListAsync();
         }
 
-        public async Task<Person> GetPerson(Guid id)
+        public async Task<Person> GetPersonByIdAsync(Guid id)
         {
             return await _context.Persons.FindAsync(id);
         }
 
-        public async Task<Person> Update(Person person)
+        public async Task<Person> UpdatePersonAsync(Person person)
         {
             _context.Entry(person).State = EntityState.Modified;
             await _context.SaveChangesAsync();
