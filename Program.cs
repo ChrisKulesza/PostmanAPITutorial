@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PostmanAPI.Data;
+using PostmanAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connection);
 });
+
+// Register the IPersonRepository via DI (Scoped => Scoped objects are the same within a request, but different across different requests.)
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,5 +36,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+AppDbInitializer.Seed(app);
 
 app.Run();
