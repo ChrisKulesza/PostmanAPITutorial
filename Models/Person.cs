@@ -11,6 +11,6 @@
         public string PostalCode { get; set; }
 
         // Navigation Properties
-        public List<Address> Addresses { get; set; }
+        //public List<Address> Addresses { get; set; }
     }
 }
