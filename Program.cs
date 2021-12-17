@@ -5,8 +5,13 @@ using PostmanAPI.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 // AppDbContext DI registration
@@ -37,6 +42,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seeding data to the database
 AppDbInitializer.Seed(app);
 
 app.Run();

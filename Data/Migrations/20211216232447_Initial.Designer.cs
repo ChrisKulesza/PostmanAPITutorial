@@ -12,8 +12,8 @@ using PostmanAPI.Data;
 namespace PostmanAPI.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211216123758_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211216232447_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace PostmanAPI.Data.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PersonId")
+                    b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PostalCode")
@@ -42,8 +42,8 @@ namespace PostmanAPI.Data.Migrations
                     b.Property<string>("StreetName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("StreetNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -58,10 +58,22 @@ namespace PostmanAPI.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -71,14 +83,13 @@ namespace PostmanAPI.Data.Migrations
 
             modelBuilder.Entity("PostmanAPI.Models.Address", b =>
                 {
-                    b.HasOne("PostmanAPI.Models.Person", null)
-                        .WithMany("Address")
-                        .HasForeignKey("PersonId");
-                });
+                    b.HasOne("PostmanAPI.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("PostmanAPI.Models.Person", b =>
-                {
-                    b.Navigation("Address");
+                    b.Navigation("Person");
                 });
 #pragma warning restore 612, 618
         }

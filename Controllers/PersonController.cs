@@ -29,18 +29,19 @@ namespace PostmanAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Person>> PostPersonAsync([FromBody]Person person)
+        public async Task<ActionResult<Person>> PostPersonAsync(Person person)
         {
             var newPerson = await _repository.CreatePersonAsync(person);
-            return CreatedAtAction(nameof(GetPersonAsync), new { id = newPerson.Id }, newPerson);
+            return CreatedAtAction(nameof(GetPersonAsync), new { guid = newPerson.Id }, newPerson);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutPerson(Guid id, [FromBody] Person person)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutPersonAsync(Guid id, [FromBody] Person person)
         {
             if (id != person.Id)
             {
-                return BadRequest();
+                // return status code 400
+                return BadRequest("Ids did not match.");
             }
 
             await _repository.UpdatePersonAsync(person);
